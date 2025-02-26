@@ -2,7 +2,7 @@
 Calculadora que transforma infix a postfix implementando diferentes tipos de estructuras de datos como Stack, Array, SimpleLinkedList y DoubleLinkedList para resolver las operaciones según decida el usuario
 
 ## Link de clonación Repositorio
-git clone
+git clone git@github.com:MagicBag-tab/Hoja-de-Trabajo-4-Algoritmos-y-Estructuras-de-Datos.git
 
 ## Estructura
 📦 Calculadora  
@@ -36,6 +36,6 @@ git clone
 Proyecto de libre uso
 
 ## Autores
-Sarah Estrada
-Luis Angel Girón
-Vernel Hernández
+- Sarah Estrada
+- Luis Angel Girón
+- Vernel Hernández
