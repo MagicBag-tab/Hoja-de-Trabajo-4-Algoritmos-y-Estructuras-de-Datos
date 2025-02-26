@@ -25,10 +25,9 @@ git clone git@github.com:MagicBag-tab/Hoja-de-Trabajo-4-Algoritmos-y-Estructuras
 │   ├── ArrayTest.java  
 │   ├── SimpleListTest.java  
 │   ├── DoubleListTest.java  
-├── 📂 images
-│   ├── UML_Hoja_de_Trabajo_4.jpeg
+├── 📂 images  
+│   ├── UML_Hoja_de_Trabajo_4.jpeg  
 └── README.md  
-
 
  ## Tecnologías
  1. Java
