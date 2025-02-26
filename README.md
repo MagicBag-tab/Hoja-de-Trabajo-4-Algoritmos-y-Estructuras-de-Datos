@@ -6,26 +6,27 @@ git clone
 
 ## Estructura
 📦 Calculadora  
- ┣ 📂 src  
- ┃ ┣ 📜 Main.java 
- ┃ ┣ 📜 Calculator.java 
- ┃ ┣ 📜 ClassFactory.java
- ┃ ┣ 📜 ClassFactory2.java
- ┃ ┣ 📜 Stack.java 
- ┃ ┣ 📜 Array.java 
- ┃ ┣ 📜 SimpleList.java 
- ┃ ┣ 📜 DoubleList.java 
- ┃ ┣ 📜 NodeSimple.java 
- ┃ ┣ 📜 NodeDouble.java 
- ┃ ┣ 📜 IList.java 
- ┃ ┣ 📜 IStack.java 
- ┣ 📂 test  
- ┃ ┣ 📜 CalculatorTest.java
- ┃ ┣ 📜 StackTest.java 
- ┃ ┣ 📜 ArrayTest.java 
- ┃ ┣ 📜 SimpleListTest.java 
- ┃ ┣ 📜 DoubleListTest.java 
- ┗ 📜 README.md  
+├── 📂 src  
+│   ├── Main.java  
+│   ├── Calculator.java  
+│   ├── ClassFactory.java  
+│   ├── ClassFactory2.java  
+│   ├── Stack.java  
+│   ├── Array.java  
+│   ├── SimpleList.java  
+│   ├── DoubleList.java  
+│   ├── NodeSimple.java  
+│   ├── NodeDouble.java  
+│   ├── IList.java  
+│   ├── IStack.java  
+├── 📂 test  
+│   ├── CalculatorTest.java  
+│   ├── StackTest.java  
+│   ├── ArrayTest.java  
+│   ├── SimpleListTest.java  
+│   ├── DoubleListTest.java  
+└── README.md  
+
 
  ## Tecnologías
  1. Java
