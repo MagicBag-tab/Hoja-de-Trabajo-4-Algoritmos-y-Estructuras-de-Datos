@@ -22,7 +22,7 @@ public class Calculator {
     public String infixToPostfix(String infix) {
         StringBuilder postfix = new StringBuilder();
         IStack<Character> operatorStack = new Stack<>();
-        operatorStack.push('#'); // Marca de inicio en la pila
+        operatorStack.push('#');
 
         Map<Character, Integer> precedence = new HashMap<>();
         precedence.put('+', 1);
@@ -43,7 +43,7 @@ public class Calculator {
                     if (!top.equals('(')) {
                         postfix.append(top).append(" ");
                     }
-                } while (!top.equals('(')); // Detener cuando encontramos '('
+                } while (!top.equals('('));
             } else {
                 while (true) {
                     Character top = operatorStack.pop();
@@ -64,7 +64,7 @@ public class Calculator {
             if (!top.equals('#')) {
                 postfix.append(top).append(" ");
             }
-        } while (!top.equals('#')); // Detener cuando encontramos '#'
+        } while (!top.equals('#'));
 
         return postfix.toString().trim();
     }
