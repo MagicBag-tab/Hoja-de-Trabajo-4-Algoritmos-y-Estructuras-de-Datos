@@ -1,6 +1,11 @@
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * La clase Calculator proporciona métodos para convertir expresiones infijas a
+ * postfijas
+ * y evaluar expresiones postfijas.
+ */
 public class Calculator {
     private static Calculator instance;
     private IStack<Integer> stack;
@@ -8,6 +13,11 @@ public class Calculator {
     private Calculator() {
     }
 
+    /**
+     * Devuelve la instancia singleton de la clase Calculator.
+     *
+     * @return la instancia singleton de la clase Calculator
+     */
     public static Calculator getInstance() {
         if (instance == null) {
             instance = new Calculator();
@@ -15,10 +25,21 @@ public class Calculator {
         return instance;
     }
 
+    /**
+     * Establece la pila a utilizar para evaluar expresiones postfijas.
+     *
+     * @param stack la pila a utilizar
+     */
     public void setStack(IStack<Integer> stack) {
         this.stack = stack;
     }
 
+    /**
+     * Convierte una expresión infija a una expresión postfija.
+     *
+     * @param infix la expresión infija
+     * @return la expresión postfija
+     */
     public String infixToPostfix(String infix) {
         StringBuilder postfix = new StringBuilder();
         IStack<Character> operatorStack = new Stack<>();
@@ -46,7 +67,6 @@ public class Calculator {
             } else {
                 while (true) {
                     char top = operatorStack.pop();
-                    // ✅ Se agregaron verificaciones para evitar NullPointerException
                     if (top == '#' || (!precedence.containsKey(top) || !precedence.containsKey(ch))
                             || precedence.get(top) < precedence.get(ch)) {
                         operatorStack.push(top);
@@ -69,6 +89,12 @@ public class Calculator {
         return postfix.toString().trim();
     }
 
+    /**
+     * Evalúa una expresión postfija.
+     *
+     * @param postfix la expresión postfija
+     * @return el resultado de la evaluación
+     */
     public int evaluatePostfix(String postfix) {
         for (String token : postfix.trim().split("\\s+")) { // ✅ Evita tokens vacíos
             if (token.matches("\\d+")) {

@@ -3,7 +3,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * La clase Main contiene el método principal que permite al usuario seleccionar
+ * el tipo de pila, convertir expresiones infijas a postfijas y evaluar las
+ * expresiones postfijas.
+ */
 public class Main {
+    /**
+     * El método principal que ejecuta el programa.
+     *
+     * @param args los argumentos de la línea de comandos
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
