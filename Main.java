@@ -7,32 +7,30 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Selección del tipo de stack
-        System.out.println("Seleccione el tipo de Stack (Stack, ArrayList, Vector): ");
+        System.out.println("Seleccione el tipo de Stack (ArrayList, Vector, Lista): ");
         String stackType = scanner.nextLine();
 
-        // Selección del tipo de lista (solo si se usa stack basado en lista)
-        String listType = null;
-        if (stackType.equalsIgnoreCase("Stack")) {
+        IStack<Integer> stack;
+        if (stackType.equalsIgnoreCase("Lista")) {
             System.out.println("Seleccione el tipo de Lista (SimpleLinkedList, DoubleLinkedList): ");
-            listType = scanner.nextLine();
+            String listType = scanner.nextLine();
+            stack = new Stack<>();
+        } else {
+            stack = Factory.createArr(stackType);
         }
 
-        // Inicializar Calculator con el tipo de stack
         Calculator calculator = Calculator.getInstance();
-        calculator.setStackType(stackType);
+        calculator.setStack(stack);
 
-        try (BufferedReader br = new BufferedReader(new FileReader(datos.txt))) {
-            String infixExpression = br.readLine();
-            System.out.println("Expresión infija: " + infixExpression);
-
-            // Convertir infijo a postfijo
-            String postfixExpression = calculator.infixToPostfix(infixExpression);
-            System.out.println("Expresión postfija: " + postfixExpression);
-
-            // Evaluar expresión postfija
-            int result = calculator.evaluatePostfix(postfixExpression);
-            System.out.println("Resultado: " + result);
+        try (BufferedReader br = new BufferedReader(new FileReader("datos.txt"))) {
+            String infixExpression;
+            while ((infixExpression = br.readLine()) != null) {
+                System.out.println("Expresión infija: " + infixExpression);
+                String postfixExpression = calculator.infixToPostfix(infixExpression);
+                System.out.println("Expresión postfija: " + postfixExpression);
+                int result = calculator.evaluatePostfix(postfixExpression);
+                System.out.println("Resultado: " + result);
+            }
         } catch (IOException e) {
             System.out.println("Error al leer el archivo: " + e.getMessage());
         }
