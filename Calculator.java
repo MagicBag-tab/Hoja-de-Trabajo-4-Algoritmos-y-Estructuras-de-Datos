@@ -1,69 +1,78 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Calculator {
     private static Calculator instance;
+    private IStack<Character> operatorStack;
+    private IStack<Integer> valueStack;
 
-    private Calculator() {
-        // Constructor privado para Singleton
-    }
+    private Calculator() {}
 
-    public static Calculator getInstanceCalculator() {
+    public static Calculator getInstance() {
         if (instance == null) {
             instance = new Calculator();
         }
         return instance;
     }
 
-    public String infixToPostfix(String expression) {
-        StringBuilder output = new StringBuilder();
-        Stack<Character> stack = new Stack<>();
+    public void setStackType(String stackType) {
+        this.operatorStack = Factory.createArr(stackType);
+        this.valueStack = Factory.createArr(stackType);
+    }
 
-        for (char ch : expression.toCharArray()) {
+    public String infixToPostfix(String infix) {
+        StringBuilder postfix = new StringBuilder();
+        operatorStack.push('#'); // Caracter especial
+
+        Map<Character, Integer> precedence = new HashMap<>();
+        precedence.put('+', 1);
+        precedence.put('-', 1);
+        precedence.put('*', 2);
+        precedence.put('/', 2);
+        precedence.put('^', 3);
+
+        for (char ch : infix.toCharArray()) {
             if (Character.isDigit(ch)) {
-                output.append(ch);
+                postfix.append(ch).append(" ");
             } else if (ch == '(') {
-                stack.push(ch);
+                operatorStack.push(ch);
             } else if (ch == ')') {
-                while (!stack.isEmpty() && stack.peek() != '(') {
-                    output.append(stack.pop());
+                while (!operatorStack.pop().equals('(')) {
+                    postfix.append(operatorStack.pop()).append(" ");
                 }
-                stack.pop(); // Eliminar '('
-            } else { // Operador
-                while (!stack.isEmpty() && precedence(stack.peek()) >= precedence(ch)) {
-                    output.append(stack.pop());
+                operatorStack.pop(); // Eliminar '(' de la pila
+            } else { // Es operador
+                while (precedence.containsKey(operatorStack.pop()) &&
+                        precedence.get(ch) <= precedence.get(operatorStack.pop())) {
+                    postfix.append(operatorStack.pop()).append(" ");
                 }
-                stack.push(ch);
+                operatorStack.push(ch);
             }
         }
-        while (!stack.isEmpty()) {
-            output.append(stack.pop());
+
+        while (!operatorStack.pop().equals('#')) {
+            postfix.append(operatorStack.pop()).append(" ");
         }
-        return output.toString();
+
+        return postfix.toString().trim();
     }
 
     public int evaluatePostfix(String postfix) {
-        Stack<Integer> stack = new Stack<>();
-
-        for (char ch : postfix.toCharArray()) {
-            if (Character.isDigit(ch)) {
-                stack.push(ch - '0'); // Convertir char a número
+        for (String token : postfix.split(" ")) {
+            if (token.matches("\\d+")) {
+                valueStack.push(Integer.parseInt(token));
             } else {
-                int b = stack.pop();
-                int a = stack.pop();
-                switch (ch) {
-                    case '+': stack.push(a + b); break;
-                    case '-': stack.push(a - b); break;
-                    case '*': stack.push(a * b); break;
-                    case '/': stack.push(a / b); break;
+                int b = valueStack.pop();
+                int a = valueStack.pop();
+                switch (token.charAt(0)) {
+                    case '+': valueStack.push(a + b); break;
+                    case '-': valueStack.push(a - b); break;
+                    case '*': valueStack.push(a * b); break;
+                    case '/': valueStack.push(a / b); break;
+                    case '^': valueStack.push((int) Math.pow(a, b)); break;
                 }
             }
         }
-        return stack.pop();
-    }
-
-    private int precedence(char operator) {
-        switch (operator) {
-            case '+': case '-': return 1;
-            case '*': case '/': return 2;
-            default: return -1;
-        }
+        return valueStack.pop();
     }
 }
