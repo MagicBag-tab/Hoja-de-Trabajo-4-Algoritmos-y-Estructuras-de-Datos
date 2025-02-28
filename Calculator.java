@@ -22,31 +22,31 @@ public class Calculator {
 
     public String infixToPostfix(String infix) {
         StringBuilder postfix = new StringBuilder();
-        operatorStack.push('#'); // Caracter especial
+        operatorStack.push('#');
 
-        Map<Character, Integer> precedence = new HashMap<>();
-        precedence.put('+', 1);
-        precedence.put('-', 1);
-        precedence.put('*', 2);
-        precedence.put('/', 2);
-        precedence.put('^', 3);
+        Map<Character, Integer> prioridad = new HashMap<>();
+        prioridad.put('+', 1);
+        prioridad.put('-', 1);
+        prioridad.put('*', 2);
+        prioridad.put('/', 2);
+        prioridad.put('^', 3);
 
-        for (char ch : infix.toCharArray()) {
-            if (Character.isDigit(ch)) {
-                postfix.append(ch).append(" ");
-            } else if (ch == '(') {
-                operatorStack.push(ch);
-            } else if (ch == ')') {
+        for (char character : infix.toCharArray()) {
+            if (Character.isDigit(character)) {
+                postfix.append(character).append(" ");
+            } else if (character == '(') {
+                operatorStack.push(character);
+            } else if (character == ')') {
                 while (!operatorStack.pop().equals('(')) {
                     postfix.append(operatorStack.pop()).append(" ");
                 }
-                operatorStack.pop(); // Eliminar '(' de la pila
-            } else { // Es operador
+                operatorStack.pop();
+            } else {
                 while (precedence.containsKey(operatorStack.pop()) &&
-                        precedence.get(ch) <= precedence.get(operatorStack.pop())) {
+                        precedence.get(character) <= precedence.get(operatorStack.pop())) {
                     postfix.append(operatorStack.pop()).append(" ");
                 }
-                operatorStack.push(ch);
+                operatorStack.push(character);
             }
         }
 
