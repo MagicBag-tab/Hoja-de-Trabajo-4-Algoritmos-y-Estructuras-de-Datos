@@ -22,7 +22,7 @@ public class Calculator {
     public String infixToPostfix(String infix) {
         StringBuilder postfix = new StringBuilder();
         IStack<Character> operatorStack = new Stack<>();
-        operatorStack.push('#');
+        operatorStack.push('#'); // Marca de inicio en la pila
 
         Map<Character, Integer> precedence = new HashMap<>();
         precedence.put('+', 1);
@@ -37,17 +37,18 @@ public class Calculator {
             } else if (ch == '(') {
                 operatorStack.push(ch);
             } else if (ch == ')') {
-                Character top;
-                do {
-                    top = operatorStack.pop();
-                    if (!top.equals('(')) {
-                        postfix.append(top).append(" ");
-                    }
-                } while (!top.equals('('));
+                while (true) {
+                    char top = operatorStack.pop();
+                    if (top == '(')
+                        break;
+                    postfix.append(top).append(" ");
+                }
             } else {
                 while (true) {
-                    Character top = operatorStack.pop();
-                    if (top.equals('#') || precedence.get(top) < precedence.get(ch)) {
+                    char top = operatorStack.pop();
+                    // ✅ Se agregaron verificaciones para evitar NullPointerException
+                    if (top == '#' || (!precedence.containsKey(top) || !precedence.containsKey(ch))
+                            || precedence.get(top) < precedence.get(ch)) {
                         operatorStack.push(top);
                         operatorStack.push(ch);
                         break;
@@ -58,22 +59,21 @@ public class Calculator {
             }
         }
 
-        Character top;
-        do {
-            top = operatorStack.pop();
-            if (!top.equals('#')) {
-                postfix.append(top).append(" ");
-            }
-        } while (!top.equals('#'));
+        while (true) {
+            char top = operatorStack.pop();
+            if (top == '#')
+                break;
+            postfix.append(top).append(" ");
+        }
 
         return postfix.toString().trim();
     }
 
     public int evaluatePostfix(String postfix) {
-        for (String token : postfix.split(" ")) {
+        for (String token : postfix.trim().split("\\s+")) { // ✅ Evita tokens vacíos
             if (token.matches("\\d+")) {
                 stack.push(Integer.parseInt(token));
-            } else {
+            } else if (!token.isEmpty()) { // ✅ Verifica que el token no esté vacío
                 int b = stack.pop();
                 int a = stack.pop();
                 switch (token.charAt(0)) {
