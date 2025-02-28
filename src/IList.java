@@ -5,5 +5,5 @@
 public interface IList<T> {
     void add(T value);
 
-    T delete();
+    void delete(int index);
 }
