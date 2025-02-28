@@ -22,6 +22,7 @@ public class Calculator {
     public String infixToPostfix(String infix) {
         StringBuilder postfix = new StringBuilder();
         IStack<Character> operatorStack = new Stack<>();
+        operatorStack.push('#'); // Marca de inicio en la pila
 
         Map<Character, Integer> precedence = new HashMap<>();
         precedence.put('+', 1);
@@ -36,21 +37,34 @@ public class Calculator {
             } else if (ch == '(') {
                 operatorStack.push(ch);
             } else if (ch == ')') {
-                while (!operatorStack.pop().equals('(')) {
-                    postfix.append(operatorStack.pop()).append(" ");
-                }
+                Character top;
+                do {
+                    top = operatorStack.pop();
+                    if (!top.equals('(')) {
+                        postfix.append(top).append(" ");
+                    }
+                } while (!top.equals('(')); // Detener cuando encontramos '('
             } else {
-                while (!operatorStack.pop().equals('#') && precedence.containsKey(operatorStack.pop()) &&
-                        precedence.get(ch) <= precedence.get(operatorStack.pop())) {
-                    postfix.append(operatorStack.pop()).append(" ");
+                while (true) {
+                    Character top = operatorStack.pop();
+                    if (top.equals('#') || precedence.get(top) < precedence.get(ch)) {
+                        operatorStack.push(top);
+                        operatorStack.push(ch);
+                        break;
+                    } else {
+                        postfix.append(top).append(" ");
+                    }
                 }
-                operatorStack.push(ch);
             }
         }
 
-        while (!operatorStack.pop().equals('#')) {
-            postfix.append(operatorStack.pop()).append(" ");
-        }
+        Character top;
+        do {
+            top = operatorStack.pop();
+            if (!top.equals('#')) {
+                postfix.append(top).append(" ");
+            }
+        } while (!top.equals('#')); // Detener cuando encontramos '#'
 
         return postfix.toString().trim();
     }
