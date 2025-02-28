@@ -1,8 +1,8 @@
 public class DoubleList<T> implements IList<T> {
 
-    private DoubleNode<T> first;
-    private DoubleNode<T> last;
-    private int count = 0;
+    DoubleNode<T> first;
+    DoubleNode<T> last;
+    int count = 0;
 
     @Override
     public void add(T value) {
