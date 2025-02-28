@@ -22,11 +22,7 @@ public class Main {
         Calculator calculator = Calculator.getInstance();
         calculator.setStackType(stackType);
 
-        // Leer expresión desde un archivo
-        System.out.println("Ingrese el nombre del archivo con la expresión (ejemplo: input.txt): ");
-        String fileName = scanner.nextLine();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(datos.txt))) {
             String infixExpression = br.readLine();
             System.out.println("Expresión infija: " + infixExpression);
 
